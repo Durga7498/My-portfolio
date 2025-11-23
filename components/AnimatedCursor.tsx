@@ -100,7 +100,7 @@ export default function AnimatedCursor() {
     const target = e.target as HTMLElement
     
     // Check for interactive elements
-    const isHoverable = 
+    const isHoverable = !!(
       target.tagName === 'A' ||
       target.tagName === 'BUTTON' ||
       target.getAttribute('role') === 'button' ||
@@ -110,6 +110,7 @@ export default function AnimatedCursor() {
       target.closest('.cursor-grow') ||
       target.closest('[onclick]') ||
       (target.closest('[tabindex]') && target.closest('[tabindex]')?.getAttribute('tabindex') !== '-1')
+    )
 
     setIsHovering(isHoverable)
 
@@ -207,7 +208,7 @@ export default function AnimatedCursor() {
       {!isHidden && trailPositions.current.map((_, index) => (
         <div
           key={index}
-          ref={(el) => (trailRefs.current[index] = el)}
+          ref={(el) => { trailRefs.current[index] = el }}
           className="fixed top-0 left-0 w-2 h-2 rounded-full bg-primary pointer-events-none z-[9998] transition-opacity duration-300"
           style={{
             transform: `translate(${trailPositions.current[index].x}px, ${trailPositions.current[index].y}px) translate(-50%, -50%)`,
